@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
+
+        body {
+            background-color: #333;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            padding: 100px;
+            color: whitesmoke;
+        }
+
+        h1 {
+            color: orange;
+        }
+
+        .quote-box {
+            padding: 50px;
+            border: 3px solid orange;
+            border-radius: 10px;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        a {
+            color: orange;
+        }
+
+        a:hover {
+            color: #777;
+        }
+
+        .logo-link {
+            font-family: "Permanent Marker";
+            margin-left: 5px;
+            color: orange;
+            position: absolute;
+             right: 10px;
+             bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>API Playground</h1>
+    <p>Currently you will only get a random line of Chuck Norris satire. More to come...</p>
+    <div class="quote-box">
+        <h3 id="quote"></h3>
+    </div>
+    <h2>Sources</h2>
+    <div class="sources">
+        <div class="source"><a href="https://api.chucknorris.io/">chucknorris.io</a></div>
+    </div>
+
+    <a class="logo-link" href="https://colbyhemond.me/" target="_blank" rel="noopener">
+        colbyhemond.me</a>
+
+    <script>
+        fetch('https://api.chucknorris.io/jokes/random')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.value);
+                let quote = document.querySelector('#quote');
+                console.log(quote);
+                quote.innerHTML = `${data.value}`;
+            })
+    </script>
+</body>
+
+</html>
