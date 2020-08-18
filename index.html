@@ -65,6 +65,7 @@
         <h3 id="quote"></h3>
     </div>
     <div class="buttons">
+        <select id="chuck-categories"></select>
         <button id="new-chuck" onclick="getChuck()">Mr. Norris</button>
     </div>
     <h2>Sources</h2>
@@ -81,22 +82,57 @@
             quote.innerHTML = text;
         }
 
+        const setChuckCategories = function (categoriesArray) {
+            let categoriesSelect = document.querySelector('#chuck-categories');
+            categoriesSelect.innerHTML = categoriesArray.map(category =>
+                `<option value='${category}'>${category}</option>`)
+        }
+
         function loadingText() {
             let quote = document.querySelector('#quote');
             quote.innerHTML = 'Wait for it...';
         }
 
-        const getChuck = function () {
+        const getSelectedChuckCategory = function () {
+            let category = document.querySelector('#chuck-categories');
+            
+            if (category.options[category.selectedIndex] !== undefined) {
+                return category.options[category.selectedIndex].value;
+            } else {
+                return 'all'
+            }
+        }
+
+        const getChuck = function (category) {
             loadingText();
 
-            fetch('https://api.chucknorris.io/jokes/random')
+            category = getSelectedChuckCategory();
+            
+            if (category == 'all') {
+                fetch('https://api.chucknorris.io/jokes/random')
+                    .then(response => response.json())
+                    .then(data => setQuote(data.value))
+                    .catch()
+            } else {
+                fetch(`https://api.chucknorris.io/jokes/random?category=${category}`)
+                    .then(response => response.json())
+                    .then(data => setQuote(data.value))
+                    .catch()
+            }
+        }
+
+        const getChuckCategories = function () {
+            fetch('https://api.chucknorris.io/jokes/categories')
                 .then(response => response.json())
-                .then(data => setQuote(data.value))
+                .then(data => {
+                    data.unshift('all')
+                    setChuckCategories(data)
+                })
                 .catch()
         }
 
         getChuck();
-
+        getChuckCategories();
     </script>
 </body>
 
