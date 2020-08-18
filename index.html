@@ -65,6 +65,7 @@
         <h3 id="quote"></h3>
     </div>
     <div class="buttons">
+        <select id="chuck-categories"></select>
         <button id="new-chuck" onclick="getChuck()">Mr. Norris</button>
     </div>
     <h2>Sources</h2>
@@ -81,6 +82,11 @@
             quote.innerHTML = text;
         }
 
+        const setChuckCategories = function (categoriesArray) {
+            let categoriesSelect = document.querySelector('#chuck-categories');
+            categoriesSelect.innerHTML = categoriesArray.map(category => `<option>${category}</option>`)
+        }
+
         function loadingText() {
             let quote = document.querySelector('#quote');
             quote.innerHTML = 'Wait for it...';
@@ -92,10 +98,18 @@
             fetch('https://api.chucknorris.io/jokes/random')
                 .then(response => response.json())
                 .then(data => setQuote(data.value))
+                .catch(setQuote(`Uh Oh...We couldn't find anything`))
+        }
+
+        const getChuckCategories = function () {
+            fetch('https://api.chucknorris.io/jokes/categories')
+            .then(response => response.json())
+                .then(data => setChuckCategories(data))
                 .catch()
         }
 
         getChuck();
+        getChuckCategories();
 
     </script>
 </body>
