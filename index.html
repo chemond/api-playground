@@ -104,7 +104,10 @@
         const getChuckCategories = function () {
             fetch('https://api.chucknorris.io/jokes/categories')
             .then(response => response.json())
-                .then(data => setChuckCategories(data))
+                .then(data => {
+                    data.unshift('all')
+                    setChuckCategories(data)
+                })
                 .catch()
         }
 
