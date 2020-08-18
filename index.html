@@ -84,7 +84,7 @@
 
         const setChuckCategories = function (categoriesArray) {
             let categoriesSelect = document.querySelector('#chuck-categories');
-            categoriesSelect.innerHTML = categoriesArray.map(category => `<option>${category}</option>`)
+            categoriesSelect.innerHTML = categoriesArray.map(category => `<option value='${category}'>${category}</option>`)
         }
 
         function loadingText() {
@@ -95,10 +95,20 @@
         const getChuck = function () {
             loadingText();
 
+            let category = document.querySelector('#chuck-categories');
+            console.log(category);
+            if (category = 'all'){
+
             fetch('https://api.chucknorris.io/jokes/random')
                 .then(response => response.json())
                 .then(data => setQuote(data.value))
                 .catch(setQuote(`Uh Oh...We couldn't find anything`))
+            } else {
+                fetch(`https://api.chucknorris.io/jokes/random?category={${category}}`)
+                .then(response => response.json())
+                .then(data => setQuote(data.value))
+                .catch(setQuote(`Uh Oh...We couldn't find anything`))
+            }
         }
 
         const getChuckCategories = function () {
