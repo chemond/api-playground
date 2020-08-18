@@ -41,8 +41,19 @@
             margin-left: 5px;
             color: orange;
             position: absolute;
-             right: 10px;
-             bottom: 10px;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        button {
+            background-color: orange;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid black;
+        }
+
+        button:active {
+            background-color: rgb(160, 104, 0);
         }
     </style>
 </head>
@@ -51,7 +62,10 @@
     <h1>API Playground</h1>
     <p>Currently you will only get a random line of Chuck Norris satire. More to come...</p>
     <div class="quote-box">
-        <h3 id="quote">Get Ready...</h3>
+        <h3 id="quote"></h3>
+    </div>
+    <div class="buttons">
+        <button id="new-chuck" onclick="getChuck()">Mr. Norris</button>
     </div>
     <h2>Sources</h2>
     <div class="sources">
@@ -62,14 +76,27 @@
         colbyhemond.me</a>
 
     <script>
-        fetch('https://api.chucknorris.io/jokes/random')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data.value);
-                let quote = document.querySelector('#quote');
-                console.log(quote);
-                quote.innerHTML = `${data.value}`;
-            })
+        function setQuote(text) {
+            let quote = document.querySelector('#quote');
+            quote.innerHTML = text;
+        }
+
+        function loadingText() {
+            let quote = document.querySelector('#quote');
+            quote.innerHTML = 'Wait for it...';
+        }
+
+        const getChuck = function () {
+            loadingText();
+
+            fetch('https://api.chucknorris.io/jokes/random')
+                .then(response => response.json())
+                .then(data => setQuote(data.value))
+                .catch()
+        }
+
+        getChuck();
+
     </script>
 </body>
 
