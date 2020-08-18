@@ -73,11 +73,15 @@
         <div class="source"><a href="https://api.chucknorris.io/">chucknorris.io</a></div>
     </div>
 
-    <a class="logo-link" href="https://colbyhemond.me/" target="_blank" rel="noopener">
-        colbyhemond.me</a>
+    <a class="logo-link" href="https://colbyhemond.me/" target="_blank" rel="noopener">colbyhemond.me</a>
 
     <script>
-        function setQuote(text) {
+        const loadingText = function () {
+            let quote = document.querySelector('#quote');
+            quote.innerHTML = 'Wait for it...';
+        }
+
+        const setQuote = function (text) {
             let quote = document.querySelector('#quote');
             quote.innerHTML = text;
         }
@@ -85,17 +89,12 @@
         const setChuckCategories = function (categoriesArray) {
             let categoriesSelect = document.querySelector('#chuck-categories');
             categoriesSelect.innerHTML = categoriesArray.map(category =>
-                `<option value='${category}'>${category}</option>`)
-        }
-
-        function loadingText() {
-            let quote = document.querySelector('#quote');
-            quote.innerHTML = 'Wait for it...';
+                `<option value='${category}'>${category}</option>`);
         }
 
         const getSelectedChuckCategory = function () {
             let category = document.querySelector('#chuck-categories');
-            
+
             if (category.options[category.selectedIndex] !== undefined) {
                 return category.options[category.selectedIndex].value;
             } else {
@@ -104,10 +103,11 @@
         }
 
         const getChuck = function (category) {
+
             loadingText();
 
             category = getSelectedChuckCategory();
-            
+
             if (category == 'all') {
                 fetch('https://api.chucknorris.io/jokes/random')
                     .then(response => response.json())
