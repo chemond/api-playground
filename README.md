@@ -12,3 +12,7 @@ https://api-playground.netlify.app
 ## About
 
 This is a website where API implementations are tested out for personal purposes.
+
+## APIs Implemented
+
+- api.chucknorris.io
