@@ -15,4 +15,4 @@ This is a website where API implementations are tested out for personal purposes
 
 ## APIs Implemented
 
-- api.chucknorris.io
+- https://api.chucknorris.io
